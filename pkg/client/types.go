@@ -10,10 +10,10 @@ const (
 )
 
 type RPCRequest struct {
-	RPCVersion string        `json:"jsonrpc"`
-	Method     string        `json:"method"`
-	ID         uint64        `json:"id"`
-	Params     []interface{} `json:"params,omitempty"`
+	RPCVersion string      `json:"jsonrpc"`
+	Method     string      `json:"method"`
+	ID         uint64      `json:"id"`
+	Params     interface{} `json:"params,omitempty"`
 }
 
 type RPCResponse struct {
@@ -30,4 +30,11 @@ type RPCError struct {
 
 func (e RPCError) Error() string {
 	return fmt.Sprintf("Code=%d Msg=%s", e.Code, e.Message)
+}
+
+// BdevAioCreateReq bdev_aio_create
+type BdevAioCreateReq struct {
+	BdevName  string `json:"name"`
+	FileName  string `json:"filename"`
+	BlockSize int    `json:"block_size,omitempty"`
 }

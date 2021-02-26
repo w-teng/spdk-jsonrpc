@@ -8,7 +8,7 @@ import (
 
 type JsonRpcClientIface interface {
 	Close(err error)
-	Call(method string, params []interface{}) (result []byte, err error)
+	Call(method string, params interface{}) (result []byte, err error)
 }
 
 type Client struct {
@@ -37,7 +37,7 @@ func (cli *Client) Close() (err error) {
 	return
 }
 
-func (cli *Client) Call(method string, params []interface{}) (result []byte, err error) {
+func (cli *Client) Call(method string, params interface{}) (result []byte, err error) {
 	cli.lock.Lock()
 	defer cli.lock.Unlock()
 
