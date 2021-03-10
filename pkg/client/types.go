@@ -97,14 +97,14 @@ type NVMFCreateSubsystemReq struct {
 
 type NVMFSubsystemAddNSReq struct {
 	// required
-	NQN       string    `json:"nqn"`
-	Namespace Namespace `json:"namespace"`
+	NQN       string            `json:"nqn"`
+	Namespace NamespaceForAddNS `json:"namespace"`
 
 	// optional
 	TargetName string `json:"tgt_name,omitempty"`
 }
 
-type Namespace struct {
+type NamespaceForAddNS struct {
 	// req
 	BdevName string `json:"bdev_name"`
 
@@ -158,4 +158,34 @@ type NVMFCreateTransportReq struct {
 	DifInsertOrStrip bool `json:"dif_insert_or_strip,omitempty"`
 	C2hSuccess       bool `json:"c2h_success,omitempty"`
 	NoSRQ            bool `json:"no_srq,omitempty"`
+}
+
+type Transport struct {
+	// TCP or RDMA
+	TransType     string `json:"trtype"`
+	MaxQueueDepth int    `json:"max_queue_depth"`
+}
+
+type Bdev struct {
+	Name        string `json:"name"`
+	ProductName string `json:"product_name"`
+	UUID        string `json:"uuid"`
+	BlockSize   int    `json:"block_size"`
+	NumBlocks   int    `json:"num_blocks"`
+}
+
+type Subsystem struct {
+	NQN             string          `json:""`
+	ListenAddresses []ListenAddress `json:"listen_addresses"`
+	AllowAnyHost    bool            `json:"allow_any_host"`
+	SerialNum       string          `json:"serial_number"`
+	ModelNum        string          `json:"model_number"`
+	Namespaces      []Namespace     `json:"namespaces"`
+}
+
+type Namespace struct {
+	NsID     int    `json:"nsid"`
+	BdevName string `json:"bdev_Name"`
+	Name     string `json:"name"`
+	UUID     string `json:"uuid"`
 }

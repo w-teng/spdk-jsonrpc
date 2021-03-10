@@ -11,9 +11,13 @@ type SPDKClientIface interface {
 	// RpcGetMethods rpc_get_methods
 	RpcGetMethods() ([]string, error)
 
+	// nvmf_get_transports
+	NVMFGetTransports() (result []Transport, err error)
 	// nvmf_create_transport
 	NVMFCreateTransport(req NVMFCreateTransportReq) (result bool, err error)
 
+	//bdev_get_bdevs
+	BdevGetBdevs() (result []Bdev, err error)
 	// BdevAioCreate bdev_aio_create, return the name of bdev
 	BdevAioCreate(req BdevAioCreateReq) (name string, err error)
 	// bdev_lvol_create_lvstore
@@ -21,6 +25,8 @@ type SPDKClientIface interface {
 	// bdev_lvol_create
 	BdevLVolCreate(req BdevLVolCreateReq) (uuid string, err error)
 
+	// nvmf_get_subsystems
+	NVMFGetSubsystems() (result []Subsystem, err error)
 	// nvmf_create_subsystem
 	NVMFCreateSubsystem(req NVMFCreateSubsystemReq) (result bool, err error)
 	// nvmf_subsystem_add_ns
@@ -41,6 +47,39 @@ func NewSPDK(rawCli JsonRpcClientIface) *SPDK {
 
 func (s *SPDK) GetRawClient() JsonRpcClientIface {
 	return s.rawCli
+}
+
+// nvmf_get_transports
+func (s *SPDK) NVMFGetTransports() (list []Transport, err error) {
+	result, err := s.rawCli.Call("nvmf_get_transports", nil)
+	if err != nil {
+		return
+	}
+
+	err = json.Unmarshal(result, &list)
+	return
+}
+
+//bdev_get_bdevs
+func (s *SPDK) BdevGetBdevs() (list []Bdev, err error) {
+	result, err := s.rawCli.Call("bdev_get_bdevs", nil)
+	if err != nil {
+		return
+	}
+
+	err = json.Unmarshal(result, &list)
+	return
+}
+
+// nvmf_get_subsystems
+func (s *SPDK) NVMFGetSubsystems() (list []Subsystem, err error) {
+	result, err := s.rawCli.Call("nvmf_get_subsystems", nil)
+	if err != nil {
+		return
+	}
+
+	err = json.Unmarshal(result, &list)
+	return
 }
 
 func (s *SPDK) RpcGetMethods() (methods []string, err error) {
