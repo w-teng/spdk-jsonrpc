@@ -19,6 +19,7 @@ const (
 	AddrFamilyFC   AddressFamily = "FC"
 
 	TransportTypeRDMA = "RDMA"
+	TransportTypeTCP  = "TCP"
 )
 
 type ClearMethod string
