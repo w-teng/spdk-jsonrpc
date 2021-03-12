@@ -7,7 +7,7 @@ import (
 )
 
 type JsonRpcClientIface interface {
-	Close(err error)
+	Close() (err error)
 	Call(method string, params interface{}) (result []byte, err error)
 }
 
