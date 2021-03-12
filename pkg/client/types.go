@@ -168,11 +168,20 @@ type Transport struct {
 }
 
 type Bdev struct {
-	Name        string `json:"name"`
-	ProductName string `json:"product_name"`
-	UUID        string `json:"uuid"`
-	BlockSize   int    `json:"block_size"`
-	NumBlocks   int    `json:"num_blocks"`
+	Name        string         `json:"name"`
+	ProductName string         `json:"product_name"`
+	UUID        string         `json:"uuid"`
+	BlockSize   int            `json:"block_size"`
+	NumBlocks   int            `json:"num_blocks"`
+	Driver      DriverSpecific `json:"driver_specific"`
+}
+
+type DriverSpecific struct {
+	AIO AIODriver `json:"aio"`
+}
+
+type AIODriver struct {
+	Filename string `json:"filename"`
 }
 
 type Subsystem struct {
