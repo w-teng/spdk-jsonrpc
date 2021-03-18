@@ -20,6 +20,8 @@ type SPDKClientIface interface {
 	BdevGetBdevs() (result []Bdev, err error)
 	// BdevAioCreate bdev_aio_create, return the name of bdev
 	BdevAioCreate(req BdevAioCreateReq) (name string, err error)
+	// bdev_aio_delete
+	BdevAioDelete(req BdevAioDeleteReq) (result bool, err error)
 	// bdev_lvol_create_lvstore
 	BdevLVolCreateLVStore(req BdevLVolCreateLVStoreReq) (uuid string, err error)
 	// bdev_lvol_create
@@ -27,6 +29,8 @@ type SPDKClientIface interface {
 
 	// nvmf_get_subsystems
 	NVMFGetSubsystems() (result []Subsystem, err error)
+	// nvmf_delete_subsystem
+	NVMFDeleteSubsystem(req NVMFDeleteSubsystemReq) (result bool, err error)
 	// nvmf_create_subsystem
 	NVMFCreateSubsystem(req NVMFCreateSubsystemReq) (result bool, err error)
 	// nvmf_subsystem_add_ns
@@ -151,6 +155,26 @@ func (s *SPDK) NVMFSubsystemAddNS(req NVMFSubsystemAddNSReq) (nsID int, err erro
 // nvmf_subsystem_add_listener
 func (s *SPDK) NVMFSubsystemAddListener(req NVMFSubsystemAddListenerReq) (res bool, err error) {
 	result, err := s.rawCli.Call("nvmf_create_transport", req)
+	if err != nil {
+		return
+	}
+	err = json.Unmarshal(result, &res)
+	return
+}
+
+// nvmf_delete_subsystem
+func (s *SPDK) NVMFDeleteSubsystem(req NVMFDeleteSubsystemReq) (res bool, err error) {
+	result, err := s.rawCli.Call("nvmf_delete_subsystem", req)
+	if err != nil {
+		return
+	}
+	err = json.Unmarshal(result, &res)
+	return
+}
+
+// bdev_aio_delete
+func (s *SPDK) BdevAioDelete(req BdevAioDeleteReq) (res bool, err error) {
+	result, err := s.rawCli.Call("bdev_aio_delete", req)
 	if err != nil {
 		return
 	}

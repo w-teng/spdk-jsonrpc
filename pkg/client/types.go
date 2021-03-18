@@ -199,3 +199,13 @@ type Namespace struct {
 	Name     string `json:"name"`
 	UUID     string `json:"uuid"`
 }
+
+type NVMFDeleteSubsystemReq struct {
+	NQN string `json:"nqn"`
+	// opt
+	TgtName string `json:"tgt_name,omitempty"`
+}
+
+type BdevAioDeleteReq struct {
+	Name string `json:"name"`
+}
