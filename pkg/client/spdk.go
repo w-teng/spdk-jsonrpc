@@ -144,7 +144,7 @@ func (s *SPDK) NVMFCreateSubsystem(req NVMFCreateSubsystemReq) (res bool, err er
 
 // nvmf_subsystem_add_ns
 func (s *SPDK) NVMFSubsystemAddNS(req NVMFSubsystemAddNSReq) (nsID int, err error) {
-	result, err := s.rawCli.Call("nvmf_create_transport", req)
+	result, err := s.rawCli.Call("nvmf_subsystem_add_ns", req)
 	if err != nil {
 		return
 	}
@@ -154,7 +154,7 @@ func (s *SPDK) NVMFSubsystemAddNS(req NVMFSubsystemAddNSReq) (nsID int, err erro
 
 // nvmf_subsystem_add_listener
 func (s *SPDK) NVMFSubsystemAddListener(req NVMFSubsystemAddListenerReq) (res bool, err error) {
-	result, err := s.rawCli.Call("nvmf_create_transport", req)
+	result, err := s.rawCli.Call("nvmf_subsystem_add_listener", req)
 	if err != nil {
 		return
 	}
