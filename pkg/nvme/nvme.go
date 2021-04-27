@@ -38,6 +38,12 @@ func (cli *CmdClient) ListNvmeDisk() (list []NvmeDevice, err error) {
 	if err != nil {
 		return
 	}
+
+	// no nvme devices
+	if len(bs) == 0 {
+		return
+	}
+
 	var resp = make(map[string][]NvmeDevice)
 	err = json.Unmarshal(bs, &resp)
 	if err != nil {
