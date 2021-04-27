@@ -13,6 +13,7 @@ type CmdClient struct {
 	NvmeCmdPath string
 }
 
+// NewCmdClient finds the full file paht of the command nvme
 func NewCmdClient() (cli *CmdClient, err error) {
 	path, err := exec.LookPath(DefaultCmdName)
 	if err != nil {
@@ -23,6 +24,13 @@ func NewCmdClient() (cli *CmdClient, err error) {
 		NvmeCmdPath: path,
 	}
 	return
+}
+
+// NewCmdClientWithFilePath use file as the full path of command nvme
+func NewCmdClientWithFilePath(file string) (cli *CmdClient) {
+	return &CmdClient{
+		NvmeCmdPath: file,
+	}
 }
 
 func (cli *CmdClient) ListNvmeDisk() (list []NvmeDevice, err error) {
