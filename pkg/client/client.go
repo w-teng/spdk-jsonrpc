@@ -2,6 +2,7 @@ package client
 
 import (
 	"encoding/json"
+	"log"
 	"net"
 	"sync"
 )
@@ -50,6 +51,7 @@ func (cli *Client) Call(method string, params interface{}) (result []byte, err e
 	}
 
 	bs, _ := json.Marshal(req)
+	log.Println(string(bs))
 	_, err = cli.conn.Write(bs)
 	if err != nil {
 		return
@@ -60,6 +62,7 @@ func (cli *Client) Call(method string, params interface{}) (result []byte, err e
 	decoder.Decode(&resp)
 
 	result = resp.Result
+	log.Println(string(result))
 	if resp.Error.Code != 0 {
 		err = resp.Error
 	}
