@@ -37,6 +37,14 @@ type SPDKClientIface interface {
 	NVMFSubsystemAddNS(req NVMFSubsystemAddNSReq) (nsID int, err error)
 	// nvmf_subsystem_add_listener
 	NVMFSubsystemAddListener(req NVMFSubsystemAddListenerReq) (result bool, err error)
+
+	// framework_get_subsystems
+	FrameworkGetSubsystems() (result []FrameworkGetSubsystemsItem, err error)
+	// framework_get_config
+	FrameworkGetConfig(req FrameworkGetConfigReq) (result []FrameworkGetConfigItem, err error)
+
+	// spdk_get_version
+	GetSpdkVersion() (ver SpdkVersion, err error)
 }
 
 type SPDK struct {
@@ -179,5 +187,36 @@ func (s *SPDK) BdevAioDelete(req BdevAioDeleteReq) (res bool, err error) {
 		return
 	}
 	err = json.Unmarshal(result, &res)
+	return
+}
+
+// framework_get_subsystems
+func (s *SPDK) FrameworkGetSubsystems() (result []FrameworkGetSubsystemsItem, err error) {
+	bs, err := s.rawCli.Call("framework_get_subsystems", nil)
+	if err != nil {
+		return
+	}
+
+	err = json.Unmarshal(bs, &result)
+	return
+}
+
+// framework_get_config
+func (s *SPDK) FrameworkGetConfig(req FrameworkGetConfigReq) (result []FrameworkGetConfigItem, err error) {
+	bs, err := s.rawCli.Call("framework_get_config", req)
+	if err != nil {
+		return
+	}
+	err = json.Unmarshal(bs, &result)
+	return
+}
+
+// spdk_get_version
+func (s *SPDK) GetSpdkVersion() (ver SpdkVersion, err error) {
+	bs, err := s.rawCli.Call("spdk_get_version", nil)
+	if err != nil {
+		return
+	}
+	err = json.Unmarshal(bs, &ver)
 	return
 }

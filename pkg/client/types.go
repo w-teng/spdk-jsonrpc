@@ -209,3 +209,39 @@ type NVMFDeleteSubsystemReq struct {
 type BdevAioDeleteReq struct {
 	Name string `json:"name"`
 }
+
+/*
+{
+  "version": "SPDK v21.01.1 git sha1 7d13d49",
+  "fields": {
+    "major": 21,
+    "minor": 1,
+    "patch": 1,
+    "suffix": "",
+    "commit": "7d13d49"
+  }
+}
+*/
+type SpdkVersion struct {
+	Version string            `json:"version"`
+	Fields  SpdkVersionFields `json:"fields"`
+}
+
+type SpdkVersionFields struct {
+	Major  string `json:"major"`
+	Minor  string `json:"minor"`
+	Patch  string `json:"patch"`
+	Suffix string `json:"suffix"`
+	Commit string `json:"commit"`
+}
+
+type FrameworkGetSubsystemsItem struct {
+	Subsystem string   `json:"subsystem"`
+	DependsOn []string `json:"depends_on"`
+}
+
+type FrameworkGetConfigReq struct {
+	Name string `json:"name"`
+}
+
+type FrameworkGetConfigItem map[string]interface{}
