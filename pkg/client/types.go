@@ -228,9 +228,9 @@ type SpdkVersion struct {
 }
 
 type SpdkVersionFields struct {
-	Major  string `json:"major"`
-	Minor  string `json:"minor"`
-	Patch  string `json:"patch"`
+	Major  int    `json:"major"`
+	Minor  int    `json:"minor"`
+	Patch  int    `json:"patch"`
 	Suffix string `json:"suffix"`
 	Commit string `json:"commit"`
 }
