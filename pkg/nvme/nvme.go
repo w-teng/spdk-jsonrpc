@@ -54,7 +54,7 @@ func (cli *CmdClient) ListNvmeDisk() (list []NvmeDevice, err error) {
 	return
 }
 
-func (cli *CmdClient) ConnectTarget(ip, svcID, nqn string, opts []string) (output []byte, err error) {
+func (cli *CmdClient) ConnectTarget(ip, svcID, nqn string, opts ...string) (output []byte, err error) {
 	// nvme connect -t tcp -a 11.71.55.18 -s 4450 -n nqn.2021-03.com.alipay.ob:test-aio2
 	// opts: --reconnect-delay 2 --ctrl-loss-tmo 10
 	args := []string{
